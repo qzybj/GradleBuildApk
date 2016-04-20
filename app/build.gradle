@@ -5,8 +5,10 @@ android {
         release {
             keyAlias 'android.keystore'
             keyPassword '123654'
-            storeFile file('E:/zyb/GIT/GradleBuildApk/gradlebuildapk.jks')
+            //keyPassword System.console().readLine("\n Key password: ")
+            storeFile file('gradlebuildapk')
             storePassword '123654'
+            //storePassword System.console().readLine("\n Keystore password: ")
         }
     }
     compileSdkVersion 23
