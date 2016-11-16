@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="gradlebuildapk.earlll.com.gradlebuildapk">
-
+    xmlns:tools="http://schemas.android.com/tools"
+    package="gradlebuildapk.earlll.com.gradlebuildapk"
+    >
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        tools:replace="label,allowBackup"
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
@@ -18,9 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="${UMENG_CHANNEL_VALUE}" />
-    </application>
+        <meta-data android:name="UMENG_CHANNEL" android:value="${UMENG_CHANNEL_VALUE}"/>
+        <meta-data android:name="YINTAI_CHANNEL" android:value="${YINTAI_CHANNEL_VALUE}"/>
 
+    </application>
 </manifest>

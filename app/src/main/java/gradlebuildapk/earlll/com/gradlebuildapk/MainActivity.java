@@ -1,8 +1,11 @@
 package gradlebuildapk.earlll.com.gradlebuildapk;
 
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -26,7 +29,14 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_main);
+        if(fragment instanceof MainActivityFragment){
+            MainActivityFragment fragmentShow =  (MainActivityFragment)fragment;
+            //fragmentShow.setTextShow();
+        }
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
