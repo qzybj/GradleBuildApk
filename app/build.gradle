@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 def releaseTime() {
-    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
 }
 android {
     compileSdkVersion 23
@@ -11,11 +11,11 @@ android {
         applicationId "com.earlll.gradlebuildapk"
         minSdkVersion 14
         targetSdkVersion 19
-        versionCode 1
-        versionName "1.0"
+        versionCode 59
+        versionName "4.5.0"
 
         //multiDexEnabled true  // dex突破65535的限制
-        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "umeng_app",YINTAI_CHANNEL_VALUE:"yt_app"] //默认渠道号
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "umeng_app",YINTAI_CHANNEL_VALUE:"yt_app",CHANNEL_NAME_VALUE:"yt_name"] //默认渠道号
     }
     signingConfigs {
         debug {
@@ -59,8 +59,10 @@ android {
                 variant.outputs.each { output ->
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                        // 输出apk名称为GradleBuild_v1.0_2015-01-15_app.apk
-                        def fileName = "GradleBuild_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
+                        // 输出apk名称为app_v1.0_2015-01-15_app.apk
+                        //def fileName = "app_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
+                        //YINTAI_4.5.0_1090201_谷歌安卓市场_umeng_20161115.apk
+                        def fileName = "YINTAI_${defaultConfig.versionName}_${variant.productFlavors[0].name}_umeng_${releaseTime()}.apk"
                         output.outputFile = new File(outputFile.parent, fileName)
                     }
                 }
@@ -71,16 +73,38 @@ android {
         abortOnError false
     }
     productFlavors {
-        app {
-        }
-        google {
-        }
-        _360 {
+        def path="../sourceId.cfg"
+        file(path).eachLine { line->
+            def words = line.split(':')
+            def channel = words[0]
+            def channelname = words[1]
+            if (channel == '') {
+                channel = channelname
+            }
+            def name = channel
+
+            "$name" {
+                manifestPlaceholders=[UMENG_CHANNEL_VALUE:channel,
+                                      YINTAI_CHANNEL_VALUE:channel,
+                                      CHANNEL_NAME_VALUE:channelname ]
+//                applicationId "com.lwp.app"
+                buildConfigField 'String', 'GRADLE_NAME',"\"" +channelname+"\""
+                resValue "string", "gradle_show",   channelname
+                resValue "string", "gradle_show1",  channel
+            }
         }
     }
-    productFlavors.all { flavor ->
-        flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE:"umeng_"+name, YINTAI_CHANNEL_VALUE:"yt_"+name ]
-    }
+//    productFlavors {
+//        app {
+//        }
+//        google {
+//        }
+//        "360" {
+//        }
+//    }
+//    productFlavors.all { flavor ->
+//        flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE:"umeng_"+name, YINTAI_CHANNEL_VALUE:"yt_"+name ]
+//    }
 }
 
 dependencies {

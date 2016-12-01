@@ -1,6 +1,5 @@
 package gradlebuildapk.earlll.com.gradlebuildapk;
 
-import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.support.v4.app.Fragment;
@@ -15,6 +14,7 @@ import android.widget.TextView;
  */
 public class MainActivityFragment extends Fragment {
     TextView tv_show;
+    TextView tv_show1;
     public MainActivityFragment() {
     }
 
@@ -22,13 +22,14 @@ public class MainActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         tv_show= (TextView)view.findViewById(R.id.tv_show);
-        setTextShow(getMetaData("UMENG_CHANNEL")+"-"+getMetaData("YINTAI_CHANNEL"));
-
+        tv_show1= (TextView)view.findViewById(R.id.tv_show1);
+        setTextShow(tv_show,getMetaData("UMENG_CHANNEL")+"-"+getMetaData("YINTAI_CHANNEL")+"-"+getMetaData("CHANNEL_NAME"));
+        setTextShow(tv_show1,"-"+getActivity().getString(R.string.gradle_show)+"-"+getActivity().getString(R.string.gradle_show1));
         return view;
     }
-    public void setTextShow(String text){
-        if(tv_show!=null){
-            tv_show.setText(text);
+    public void setTextShow(TextView tv,String text){
+        if(tv!=null){
+            tv.setText(text);
         }
     }
 
